@@ -3,10 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import LoginPage from './components/LoginPage';
 import SignInPage from './components/SignInPage';
 import HomePage from './components/HomePage';
-import AdminPage from './components/AdminPage';
-import QuestionPage from './components/QuestionPage';
 import ProfilePage from './components/ProfilePage';
-import CommentSection from './components/CommentSection';
 import { AuthProvider } from './components/AuthContext';
 import AuthContext from './components/AuthContext';
 

@@ -12,19 +12,18 @@ function HomePage() {
     // Fetch questions from the backend when the component mounts
     const fetchQuestions = async () => {
       try {
-        const response = await fetch(`${Config.baseURL}/api/questions/`, { // Updated URL
+        const response = await fetch(`${Config.baseURL}/api/questions/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            // Include your authorization header if needed
-            // 'Authorization': `Bearer ${yourToken}`
+            'Authorization': `Bearer ${yourToken}`
           },
         });
 
         if (response.ok) {
           const data = await response.json();
           setQuestions(data);
-          setDifficultyValues(data.map(() => 1)); // Initialize difficulty values
+          setDifficultyValues(data.map(() => 1));
         } else {
           console.error('Failed to fetch questions:', response.status);
         }

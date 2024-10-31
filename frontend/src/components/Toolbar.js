@@ -9,7 +9,6 @@ function Toolbar() {
 
   const handleLogout = () => {
     logoutUser();
-    navigate('/login'); // Redirect to login page after logout
   };
 
   return (
@@ -21,9 +20,13 @@ function Toolbar() {
         <li>
           <Link to="/profile" className="toolbar-link">Profile</Link>
         </li>
-        <li>
-          <button onClick={handleLogout} className="toolbar-link">Logout</button>
-        </li>
+        {user ? (
+          <li>
+            <button onClick={handleLogout} className="toolbar-link">Logout</button>
+          </li>
+        ) : (
+          <></>
+        )}
       </ul>
     </nav>
   );
