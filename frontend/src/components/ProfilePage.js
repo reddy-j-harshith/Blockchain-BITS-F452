@@ -4,12 +4,12 @@ import Toolbar from './Toolbar';
 import AuthContext from './AuthContext';
 
 function ProfilePage() {
-  const { user, updateUserProfile } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const [userDetails, setUserDetails] = useState({
     username: user?.username || '',
     email: user?.email || '',
-    password: '', // Password will not be pre-filled for security reasons
+    PublicKey: user?.public_key,
   });
 
   const handleChange = (e) => {
@@ -18,16 +18,6 @@ function ProfilePage() {
       ...userDetails,
       [name]: value,
     });
-  };
-
-  const handleSave = async () => {
-    try {
-      await updateUserProfile(userDetails);
-      alert('Profile updated!');
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Failed to update profile');
-    }
   };
 
   return (
@@ -54,15 +44,13 @@ function ProfilePage() {
           />
         </label>
         <label>
-          Password:
+          Public Key:
           <input
-            type="password"
             name="password"
-            value={userDetails.password}
+            value={userDetails.PublicKey}
             onChange={handleChange}
           />
         </label>
-        <button type="button" onClick={handleSave}>Save Changes</button>
       </form>
     </div>
   );

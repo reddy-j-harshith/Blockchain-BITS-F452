@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   });
   const [publicKey, setPublicKey] = useState(() => {
     const token = localStorage.getItem('authTokens');
-    return token ? jwtDecode(token) : null;
+    return token ? jwtDecode(token).public_key : null;
   });
 
   const [loading, setLoading] = useState(true);
@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
   const logoutUser = () => {
     setAuthTokens(null);
     setUser(null);
-    setAdmin(false);
+    setPublicKey(false);
     localStorage.removeItem('authTokens');
     navigate('/login');
   };
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
     if (response.status === 200) {
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
-      setAdmin(jwtDecode(data.access).is_staff);
+      setPublicKey(jwtDecode(data.access).public_key);
       localStorage.setItem('authTokens', JSON.stringify(data));
     } else {
       logoutUser();
@@ -101,35 +101,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, [authTokens]);
 
-  const updateUserProfile = async (details) => {
-    try {
-      const response = await fetch(`${baseURL}/api/user/update/`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authTokens?.access}`,
-        },
-        body: JSON.stringify(details),
-      });
-  
-      if (response.ok) {
-        const updatedData = await response.json();
-        if (details.password) {
-          logoutUser();
-        } else {
-          setUser(updatedData);
-          localStorage.setItem('authTokens', JSON.stringify(authTokens));
-        }
-      } else {
-        throw new Error('Failed to update profile');
-      }
-    } catch (error) {
-      console.error('Error updating profile:', error);
-    }
-  };
-  
-  
-
   const contextData = {
     authTokens: authTokens,
     user: user,
@@ -137,7 +108,6 @@ export const AuthProvider = ({ children }) => {
     loading: loading,
     loginUser: loginUser,
     logoutUser: logoutUser,
-    updateUserProfile: updateUserProfile,
   };
 
   return (

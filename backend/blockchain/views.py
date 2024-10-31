@@ -15,6 +15,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         token['is_staff'] = user.is_staff
         token['public_key'] = user.public_key
+        token['email'] = user.email
         return token
 
 class MyTokenObtainPairView(TokenObtainPairView):

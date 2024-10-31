@@ -16,7 +16,7 @@ function HomePage() {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${yourToken}`
+            // 'Authorization': `Bearer ${yourToken}`
           },
         });
 
