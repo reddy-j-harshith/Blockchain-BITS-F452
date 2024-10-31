@@ -4,12 +4,12 @@ import Toolbar from './Toolbar';
 import AuthContext from './AuthContext';
 
 function ProfilePage() {
-  const { user, publicKey } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const [userDetails, setUserDetails] = useState({
     username: user?.username || '',
     email: user?.email || '',
-    PublicKey: publicKey,
+    PublicKey: user?.public_key || '',
   });
 
   const handleChange = (e) => {
