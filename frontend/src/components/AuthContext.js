@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       const decodedToken = jwtDecode(data.access);
       setUser(decodedToken);
-      setPublicKey(decodedToken.publicKey);
+      setPublicKey(decodedToken.public_key);
       localStorage.setItem('authTokens', JSON.stringify(data));
       navigate('/home');
       
