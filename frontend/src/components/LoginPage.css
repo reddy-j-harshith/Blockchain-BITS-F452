@@ -1,0 +1,77 @@
+/* LoginPage.css */
+.login-form-container {
+  background-image: url('../assets/signin-assets/rene-bohmer-YeUVDKZWSZ4-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for better text visibility */
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.col {
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  width: calc(100%); /* Adjust width to account for padding and border */
+  box-sizing: border-box; /* Ensure padding and border are included in width calculation */
+}
+
+input[type="submit"] {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Ensure submit button spans the full width of the container */
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.divider {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.divider-text {
+  color: white;
+}
+
+.register-button {
+  margin-top: 10px;
+  width: 100%; /* Ensure register button spans the full width of the container */
+}

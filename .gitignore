@@ -1,0 +1,4 @@
+backend/backend/__pycache__/
+backend/blockchain/migrations/
+backend/blockchain/__pycache__/
+myenv

@@ -1,0 +1,152 @@
+/* Overall layout */
+.login-container {
+  background-image: url('../assets/signin-assets/rene-bohmer-YeUVDKZWSZ4-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+/* Left Section styling */
+.left-section {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly opaque white background for better readability */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a slight lift effect */
+}
+
+/* Question and Poll text styling */
+.question-text {
+  color: black;
+}
+
+.poll-text {
+  color: rgb(219, 140, 12);
+}
+
+.login-box {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+}
+
+/* Heading styling */
+.login-heading {
+  font-size: 1.8rem;
+  text-align: left;
+  margin-bottom: 30px;
+  font-family: 'Montserrat', sans-serif;
+  color: black;
+}
+
+/* Highlight styling */
+.highlight {
+  color: rgb(219, 140, 12); /* Yellow for "Account" */
+}
+
+/* Input Group styling */
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-label {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  color: #aaa;
+  font-size: 0.9rem;
+  background-color: white; /* Ensure label is readable on input field */
+  padding: 0 5px; /* Add padding to avoid overlapping text */
+}
+
+.input-field {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 2px solid #333;
+  border-radius: 0;
+  width: 100%; /* Adjust to 100% width for better alignment */
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Placeholder text styling */
+.input-field::placeholder {
+  font-size: 1rem; /* Match placeholder size with input text size */
+  color: #aaa;
+}
+
+/* Button styling */
+.login-btn {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 26px;
+  width: 100%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-family: 'Lucida Console', monospace;
+  font-weight: 900;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #333; /* Darker color on hover */
+}
+
+/* Register box styling */
+.register-box {
+  text-align: left;
+  padding: 20px;
+}
+
+.no-account-text {
+  color: black;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.create-account-link {
+  color: black;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 800;
+  position: relative;
+}
+
+.create-account-link::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: black;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.create-account-link:hover {
+  color: black;
+  text-decoration: none;
+}
+
+/* Image section */
+.image-section {
+  width: 65%;
+}
+
+.abstract-image {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}

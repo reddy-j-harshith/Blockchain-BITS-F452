@@ -1,0 +1,109 @@
+.home-container {
+    padding: 20px;
+  }
+  
+  .home-content {
+    margin-top: 20px;
+  }
+  
+  .questions-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .questions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .questions-table th, .questions-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .questions-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .even-row {
+    background-color: #f9f9f9;
+  }
+  
+  .odd-row {
+    background-color: #fff;
+  }
+  
+  .questions-table td input[type="range"] {
+    width: 100px;
+  }
+  
+  .actions-cell {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .comment-button, .review-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px; /* Consistent padding */
+    margin: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 17px; /* Ensures text size is consistent */
+    width: 100px; /* Fixed width */
+    height: 36px; /* Fixed height */
+    display: flex; /* Use Flexbox for alignment */
+    align-items: center; /* Vertically center the text */
+    font-weight: 900;
+    justify-content: center; /* Horizontally center the text */
+  }
+  
+  .comment-button:hover, .review-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .difficulty-meter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .difficulty-input {
+    width: 100px;
+    appearance: none; /* Remove default styling */
+    background: #000000;
+    height: 5px;
+    border-radius: 2px;
+    outline: none; /* Remove outline on focus */
+    margin: 0 5px; /* Add some margin for spacing */
+  }
+  
+  .difficulty-input::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default thumb styling */
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #007bff; /* Blue color for the thumb */
+    cursor: pointer;
+  }
+  
+  .difficulty-number {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 5px; /* Add some margin for spacing */
+  }
