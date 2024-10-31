@@ -16,20 +16,14 @@ function Toolbar() {
     <nav className="toolbar">
       <ul className="toolbar-menu">
         <li>
-          <Link to={user && user.is_staff ? "/admin" : "/home"} className="toolbar-link">Home</Link>
+          <Link to={user ? "/home" : "/login"} className="toolbar-link">Home</Link>
         </li>
-        {!user?.is_staff && (
-          <li>
-            <Link to="/profile" className="toolbar-link">Profile</Link>
-          </li>
-        )}
-        {user ? (
-          <li>
-            <button onClick={handleLogout} className="toolbar-link">Logout</button>
-          </li>
-        ) : (
-          <></> // No link or button for non-authenticated users
-        )}
+        <li>
+          <Link to="/profile" className="toolbar-link">Profile</Link>
+        </li>
+        <li>
+          <button onClick={handleLogout} className="toolbar-link">Logout</button>
+        </li>
       </ul>
     </nav>
   );

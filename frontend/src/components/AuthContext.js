@@ -17,10 +17,11 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('authTokens');
     return token ? jwtDecode(token) : null;
   });
-  const [admin, setAdmin] = useState(() => {
+  const [publicKey, setPublicKey] = useState(() => {
     const token = localStorage.getItem('authTokens');
-    return token ? jwtDecode(token).is_staff : false;
+    return token ? jwtDecode(token) : null;
   });
+
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -43,13 +44,10 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       const decodedToken = jwtDecode(data.access);
       setUser(decodedToken);
-      setAdmin(decodedToken.is_staff);
+      setPublicKey(decodedToken.publicKey);
       localStorage.setItem('authTokens', JSON.stringify(data));
-      if (decodedToken.is_staff) {
-        navigate('/admin');
-      } else {
-        navigate('/home');
-      }
+      navigate('/home');
+      
     } else if (response.status === 401) {
       alert('Invalid credentials');
     }
@@ -87,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (authTokens) {
       const tokenData = jwtDecode(authTokens.access);
-      const expirationTime = (tokenData.exp * 1000) - 60000; // Subtract 60 seconds for buffer
+      const expirationTime = (tokenData.exp * 1000) - 60000;
       const now = Date.now();
 
       if (expirationTime < now) {
@@ -117,11 +115,10 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const updatedData = await response.json();
         if (details.password) {
-          // If password is updated, user needs to log in again
-          logoutUser(); // Ensure to log out and re-login to get new tokens
+          logoutUser();
         } else {
           setUser(updatedData);
-          localStorage.setItem('authTokens', JSON.stringify(authTokens)); // Preserve existing tokens
+          localStorage.setItem('authTokens', JSON.stringify(authTokens));
         }
       } else {
         throw new Error('Failed to update profile');
@@ -136,7 +133,7 @@ export const AuthProvider = ({ children }) => {
   const contextData = {
     authTokens: authTokens,
     user: user,
-    admin: admin,
+    publicKey: publicKey,
     loading: loading,
     loginUser: loginUser,
     logoutUser: logoutUser,

@@ -9,8 +9,8 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const handleRegisterButtonClick = (e) => {
-    e.preventDefault(); // Prevent form submission
-    navigate("/register"); // Navigate to registration page
+    e.preventDefault();
+    navigate("/register");
   };
 
   return (
