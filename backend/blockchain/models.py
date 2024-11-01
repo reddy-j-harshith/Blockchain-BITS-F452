@@ -77,15 +77,14 @@ class Transaction(models.Model):
 
 class Block(models.Model):
     index = models.IntegerField()
-    proof = models.IntegerField()
+    proof = models.IntegerField() # Nonce
     previous_hash = models.CharField(max_length=64)
     current_hash = models.CharField(max_length=64, blank=True, null=True)
     transactions = models.ManyToManyField('Transaction', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def hash_block(self):
-        # Prepare data for hashing
-        # Now this method won't fail because the block is already saved
-        block_string = f'{self.index}{self.proof}{self.previous_hash}{[tx.id for tx in self.transactions.all()]}'
+
+        block_string = f'{self.index}{self.proof}{self.previous_hash}{self.timestamp}'
         return hashlib.sha256(block_string.encode()).hexdigest()
     

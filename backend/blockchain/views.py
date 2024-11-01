@@ -28,7 +28,8 @@ class MyTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
         
-        self.initialize_genesis_block(request.user)
+        if not Block.objects.exists():
+            self.initialize_genesis_block(request.user)
         
         return response
 
@@ -42,7 +43,7 @@ def initialize_genesis_block(request):
     if Block.objects.count() == 0:
 
         genesis_block = Block.objects.create(
-            index=1,
+            index=0,
             proof=1,
             previous_hash='1'
         )
@@ -109,7 +110,7 @@ def mine_block(request):
     previous_hash = last_block.current_hash if last_block else '1'
 
     proof = 0
-    while sha256(f'{last_proof}{proof}'.encode()).hexdigest()[:2] != "00":
+    while not sha256(f'{last_proof}{proof}'.encode()).hexdigest().startswith("00"):
         proof += 1
 
     block = Block.objects.create(
@@ -141,12 +142,13 @@ def validate_chain(request):
     previous_block = None
 
     for block in blocks:
-        if previous_block and block.previous_hash != previous_block.current_hash:
-            is_valid = False
-            break
-        if sha256(f'{previous_block.proof}{block.proof}'.encode()).hexdigest()[:2] != "00":
-            is_valid = False
-            break
+        if previous_block:
+            if block.previous_hash != previous_block.current_hash:
+                is_valid = False
+                break
+            if not sha256(f'{previous_block.proof}{block.proof}'.encode()).hexdigest().startswith("00"):
+                is_valid = False
+                break
         previous_block = block
 
     return JsonResponse({"is_valid": is_valid})
