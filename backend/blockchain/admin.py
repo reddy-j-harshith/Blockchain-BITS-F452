@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import CustomUser, Transaction, Block
 
-# Register your models here.
+admin.site.register(CustomUser)
+admin.site.register(Transaction)
+admin.site.register(Block)

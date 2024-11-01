@@ -30,6 +30,8 @@ class CustomUser(AbstractUser):
             encryption_algorithm=serialization.NoEncryption()
         ).decode('utf-8')
     
+    def __str__(self):
+        return self.username
     
 User = get_user_model()
 
@@ -72,6 +74,9 @@ class Transaction(models.Model):
             return True
         except Exception:
             return False
+        
+    def __str__(self):
+        return str(self.id)
 
 
 class Block(models.Model):
@@ -86,4 +91,7 @@ class Block(models.Model):
 
         block_string = f'{self.index}{self.proof}{self.previous_hash}{self.timestamp}'
         return hashlib.sha256(block_string.encode()).hexdigest()
+    
+    def __str__(self):
+        return "Block " + str(self.index)
     
