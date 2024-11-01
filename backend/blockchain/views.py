@@ -25,6 +25,39 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        
+        self.initialize_genesis_block(request.user)
+        
+        return response
+
+    def initialize_genesis_block(self, user):
+        request = self.request
+        view = initialize_genesis_block
+        response = view(request)
+        return response
+
+def initialize_genesis_block(request):
+    # Check if the genesis block already exists
+    if Block.objects.count() == 0:
+        # Create the genesis block without transactions
+        genesis_block = Block.objects.create(
+            id=1,  # This is typically set to 1
+            index=1,
+            proof=1,  # This is typically a predefined proof for the genesis block
+            previous_hash='1'  # Typically set to '1' or '0'
+        )
+        
+        # Now that the genesis block is saved, it has an ID
+        # Optionally compute its hash if you need to update it explicitly (depends on how you want to manage it)
+        genesis_block.save()  # This will set the current_hash correctly
+
+        return JsonResponse({"message": "Genesis block created successfully."}, status=201)
+    
+    return JsonResponse({"message": "Genesis block already exists."}, status=200)
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_user(request):
@@ -101,11 +134,11 @@ def mine_block(request):
     return JsonResponse(BlockSerializer(block).data, status=201)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def display_chain(request):
     chain = Block.objects.all()
     serializer = BlockSerializer(chain, many=True)
-    return JsonResponse(serializer.data)
+    return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

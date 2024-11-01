@@ -77,36 +77,19 @@ class Transaction(models.Model):
 
 class Block(models.Model):
     index = models.IntegerField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-    transactions = models.ManyToManyField(Transaction)
-    previous_hash = models.CharField(max_length=64)
-    current_hash = models.CharField(max_length=64)
     proof = models.IntegerField()
-
-    def hash_block(self):
-        """
-        Generates SHA-256 hash of the block.
-        """
-        block_string = json.dumps({
-            "index": self.index,
-            "timestamp": str(self.timestamp),
-            "transactions": [
-                {
-                    "sender": tx.sender.username,
-                    "recipient": tx.recipient.username,
-                    "amount": tx.amount,
-                    "timestamp": str(tx.timestamp),
-                } for tx in self.transactions.all()
-            ],
-            "previous_hash": self.previous_hash,
-            "proof": self.proof,
-        }, sort_keys=True).encode()
-        return hashlib.sha256(block_string).hexdigest()
+    previous_hash = models.CharField(max_length=64)
+    current_hash = models.CharField(max_length=64, blank=True, null=True)
+    transactions = models.ManyToManyField('Transaction', blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        if not self.current_hash:
-            self.current_hash = self.hash_block()
-        super().save(*args, **kwargs)
+        # Only calculate hash if the block is newly created (i.e., has no ID yet)
+        if self.pk is None:  # Check if the block is new
+            self.current_hash = self.hash_block()  # Calculate hash before saving
+        super().save(*args, **kwargs)  # Call the original save method to create the instance
 
-    def __str__(self):
-        return f"Block {self.index} [{self.current_hash}]"
+    def hash_block(self):
+        # Prepare data for hashing
+        block_string = f'{self.index}{self.proof}{self.previous_hash}{[tx.id for tx in self.transactions.all()]}'
+        return hashlib.sha256(block_string.encode()).hexdigest()

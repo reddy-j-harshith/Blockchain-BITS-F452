@@ -16,6 +16,8 @@ function Toolbar() {
     <div className="topnav">
       <Link to={user ? "/home" : "/login"} className="toolbar-link">Home</Link>
       <Link to="/profile" className="toolbar-link">Profile</Link>
+      <Link to="/transfer" className="toolbar-link">Transfer</Link>
+
       <div className="topnav-right">
         {user ? (
           <button onClick={handleLogout} className="logout-button">Logout</button>

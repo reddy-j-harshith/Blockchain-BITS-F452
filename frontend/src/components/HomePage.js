@@ -1,95 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
 import './HomePage.css';
 import Toolbar from './Toolbar';
 import Config from '../Config'; // Import your configuration for the baseURL
+import AuthContext from './AuthContext'; // Adjust the import based on your context structure
 
 function HomePage() {
-  const [questions, setQuestions] = useState([]);
-  const [difficultyValues, setDifficultyValues] = useState([]);
+  const { authTokens } = useContext(AuthContext); // Destructure context data
+  const [blockchain, setBlockchain] = useState([]);
+  const [loadingBlockchain, setLoadingBlockchain] = useState(true);
 
   useEffect(() => {
-    // Fetch questions from the backend when the component mounts
-    const fetchQuestions = async () => {
+    // Fetch the blockchain data when the component mounts
+    const fetchBlockchain = async () => {
       try {
-        const response = await fetch(`${Config.baseURL}/api/questions/`, {
+        const response = await fetch(`${Config.baseURL}/api/chain/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${yourToken}`
+            // 'Authorization': `Bearer ${authTokens}`, // Use the auth token for authorization
           },
         });
 
         if (response.ok) {
           const data = await response.json();
-          setQuestions(data);
-          setDifficultyValues(data.map(() => 1));
+          setBlockchain(data);
         } else {
-          console.error('Failed to fetch questions:', response.status);
+          console.error('Failed to fetch blockchain:', response.status);
         }
       } catch (error) {
-        console.error('Error fetching questions:', error);
+        console.error('Error fetching blockchain:', error);
+      } finally {
+        setLoadingBlockchain(false);
       }
     };
 
-    fetchQuestions();
-  }, []);
-
-  const handleDifficultyChange = (index, value) => {
-    const newValues = [...difficultyValues];
-    newValues[index] = value;
-    setDifficultyValues(newValues);
-  };
+    fetchBlockchain();
+  }, [authTokens]);
 
   return (
     <div className="home-container">
       <Toolbar />
       <div className="home-content">
-        <h1>Questions</h1>
-        <table className="questions-table">
-          <thead>
-            <tr>
-              <th>QNo.</th>
-              <th>Question Name</th>
-              <th>Subject</th>
-              <th>Topic</th>
-              <th>Correct Answer</th>
-              <th>Difficulty</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {questions.map((question, index) => (
-              <tr key={question.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
-                <td>{index + 1}</td>
-                <td>
-                  <Link to={`/question/${question.id}`}>{question.question_name}</Link>
-                </td>
-                <td>{question.subject}</td>
-                <td>{question.topic}</td>
-                <td>{question.correct_answer}</td>
-                <td>
-                  <div className="difficulty-meter">
-                    <input
-                      type="range"
-                      min="1"
-                      max="10"
-                      className="difficulty-input"
-                      value={difficultyValues[index]}
-                      onChange={(e) => handleDifficultyChange(index, e.target.value)}
-                    />
-                    <span className="difficulty-number">{difficultyValues[index]}</span>
-                  </div>
-                </td>
-                <td className="actions-cell">
-                  <Link to={`/comments/${question.id}`}>
-                    <button className="comment-button">Comment</button>
-                  </Link>
-                </td>
-              </tr>
+        <h1>Blockchain Data</h1>
+        {loadingBlockchain ? (
+          <p>Loading blockchain data...</p>
+        ) : (
+          <div className="blockchain-tiles">
+            {blockchain.map((block) => (
+              <div key={block.block_number} className="block-tile">
+                <h2>Block #{block.block_number}</h2>
+                <p><strong>Timestamp:</strong> {new Date(block.timestamp).toLocaleString()}</p>
+                <p><strong>Hash:</strong> {block.hash}</p>
+                <p><strong>Previous Hash:</strong> {block.previous_hash}</p>
+                <h3>Transactions:</h3>
+                <ul>
+                  {block.transactions.map((tx, txIndex) => (
+                    <li key={txIndex}>
+                      From: {tx.sender} To: {tx.recipient} Amount: {tx.amount}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        )}
       </div>
     </div>
   );
