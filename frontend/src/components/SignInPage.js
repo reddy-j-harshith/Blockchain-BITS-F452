@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignInPage.css';
-import Config from '../Config'; // Import your configuration if needed
+import Config from '../Config';
 
 function SignInPage() {
   const [formData, setFormData] = useState({
@@ -9,9 +9,10 @@ function SignInPage() {
     username: '',
     password: '',
   });
-
-  const [error, setError] = useState(""); // Error state for error messages
-  const navigate = useNavigate(); // For navigation after successful registration
+  const [error, setError] = useState("");
+  const [keyData, setKeyData] = useState(null); // Store public and private keys
+  const [showModal, setShowModal] = useState(false); // Control modal visibility
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -33,11 +34,12 @@ function SignInPage() {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) { // Check for successful response
-        alert('Registration successful');
-        navigate('/login');
+      if (response.ok) {
+        const data = await response.json();
+        setKeyData(data); // Store the keys
+        setShowModal(true); // Show the modal with keys
       } else {
-        const errorData = await response.json(); // Get error details if available
+        const errorData = await response.json();
         setError(errorData.message || 'Registration failed. Please check your input.');
       }
     } catch (error) {
@@ -45,12 +47,20 @@ function SignInPage() {
     }
   };
 
+  const downloadKey = (key, filename) => {
+    const blob = new Blob([key], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  };
+
   return (
     <div className="login-container">
       <div className="left-section">
         <div className="login-box">
           <h1 className="login-heading">Sign In</h1>
-          {error && <p className="error-message">{error}</p>} {/* Display error message if exists */}
+          {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="input-group">
               <label htmlFor="email" className="input-label">Email</label>
@@ -93,7 +103,36 @@ function SignInPage() {
           </div>
         </div>
       </div>
-      
+
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Your Keys Are Ready</h2>
+            <p>Download and securely store your public and private keys.</p>
+            <button
+              onClick={() => downloadKey(keyData.public_key, 'public_key.pem')}
+              className="download-btn"
+            >
+              Download Public Key
+            </button>
+            <button
+              onClick={() => downloadKey(keyData.private_key, 'private_key.pem')}
+              className="download-btn"
+            >
+              Download Private Key
+            </button>
+            <button
+              onClick={() => {
+                setShowModal(false);
+                navigate('/login');
+              }}
+              className="close-btn"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

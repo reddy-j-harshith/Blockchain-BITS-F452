@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import './ProfilePage.css';
 import Toolbar from './Toolbar';
 import AuthContext from './AuthContext';
@@ -6,52 +6,34 @@ import AuthContext from './AuthContext';
 function ProfilePage() {
   const { user, publicKey } = useContext(AuthContext);
 
-  const [userDetails, setUserDetails] = useState({
+  const userDetails = {
     username: user?.username || '',
     email: user?.email || '',
-    PublicKey: publicKey,
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserDetails({
-      ...userDetails,
-      [name]: value,
-    });
+    publicKey: publicKey,
   };
 
   return (
-    <div className="profile-page-container">
+    <div className="profile-page-wrapper">
       <Toolbar />
-      <h1>Profile Page</h1>
-      <form className="profile-form">
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={userDetails.username}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={userDetails.email}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Public Key:
-          <input
-            name="password"
-            value={userDetails.PublicKey}
-            onChange={handleChange}
-          />
-        </label>
-      </form>
+      <div className="profile-page-container">
+        <div className="profile-header">
+          <h1>Profile Page</h1>
+        </div>
+        <div className="profile-details">
+          <div className="profile-item">
+            <label>Username:</label>
+            <div className="profile-text">{userDetails.username}</div>
+          </div>
+          <div className="profile-item">
+            <label>Email:</label>
+            <div className="profile-text">{userDetails.email}</div>
+          </div>
+          <div className="profile-item">
+            <label>Public Key:</label>
+            <div className="profile-text profile-key">{userDetails.publicKey}</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

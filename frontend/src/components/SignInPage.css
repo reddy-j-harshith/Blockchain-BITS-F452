@@ -1,4 +1,3 @@
-/* Overall layout */
 .login-container {
   background-image: url('../assets/signin-assets/rene-bohmer-YeUVDKZWSZ4-unsplash.jpg');
   background-size: cover;
@@ -10,19 +9,19 @@
   padding: 0 20px;
 }
 
-/* Left Section styling */
+
 .left-section {
   width: 35%;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
+  justify-content: center;
   padding: 40px;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly opaque white background for better readability */
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a slight lift effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
-/* Question and Poll text styling */
+
 .question-text {
   color: black;
 }
@@ -38,21 +37,17 @@
   width: 100%;
 }
 
-/* Heading styling */
 .login-heading {
   font-size: 1.8rem;
   text-align: left;
   margin-bottom: 30px;
-  font-family: 'Montserrat', sans-serif;
   color: black;
 }
 
-/* Highlight styling */
 .highlight {
-  color: rgb(219, 140, 12); /* Yellow for "Account" */
+  color: rgb(219, 140, 12);
 }
 
-/* Input Group styling */
 .input-group {
   margin-bottom: 20px;
   position: relative;
@@ -64,8 +59,8 @@
   left: 10px;
   color: #aaa;
   font-size: 0.9rem;
-  background-color: white; /* Ensure label is readable on input field */
-  padding: 0 5px; /* Add padding to avoid overlapping text */
+  background-color: white;
+  padding: 0 5px;
 }
 
 .input-field {
@@ -74,18 +69,17 @@
   border: none;
   border-bottom: 2px solid #333;
   border-radius: 0;
-  width: 100%; /* Adjust to 100% width for better alignment */
+  width: 100%;
   font-size: 1rem;
   box-sizing: border-box;
 }
 
-/* Placeholder text styling */
+
 .input-field::placeholder {
-  font-size: 1rem; /* Match placeholder size with input text size */
+  font-size: 1rem;
   color: #aaa;
 }
 
-/* Button styling */
 .login-btn {
   background-color: black;
   color: white;
@@ -95,16 +89,14 @@
   width: 100%;
   font-size: 1.1rem;
   cursor: pointer;
-  font-family: 'Lucida Console', monospace;
   font-weight: 900;
   transition: background-color 0.3s ease;
 }
 
 .login-btn:hover {
-  background-color: #333; /* Darker color on hover */
+  background-color: #333;
 }
 
-/* Register box styling */
 .register-box {
   text-align: left;
   padding: 20px;
@@ -140,7 +132,6 @@
   text-decoration: none;
 }
 
-/* Image section */
 .image-section {
   width: 65%;
 }
@@ -149,4 +140,87 @@
   width: 100%;
   height: 100vh;
   object-fit: cover;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for a floating effect */
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.modal-content h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.download-btn, .close-btn {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 1em;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.download-btn {
+  background-color: #111111; /* Blue button for downloads */
+}
+
+.download-btn:hover {
+  background-color: #333333; /* Darker blue on hover */
+}
+
+.close-btn {
+  background-color: #111111; /* Green button for closing */
+}
+
+.close-btn:hover {
+  background-color: #333333; /* Darker green on hover */
+}
+
+@media (max-width: 500px) {
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.3em;
+  }
+
+  .modal-content p {
+    font-size: 0.9em;
+  }
+
+  .download-btn, .close-btn {
+    font-size: 0.9em;
+    padding: 10px 15px;
+  }
 }

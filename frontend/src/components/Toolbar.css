@@ -1,41 +1,45 @@
-.toolbar {
-  background: linear-gradient(45deg, #333, #555); /* Gradient for the toolbar */
-  padding: 1rem;
-}
-
-.toolbar-menu {
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+  padding: 16px 20px;
   display: flex;
-  justify-content: space-around;
-  list-style-type: none;
-  align-items: center; /* Centers the items vertically */
+  align-items: center;
 }
 
 .toolbar-link {
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 900;
-  font-family: 'Montserrat', sans-serif;
   color: white;
-  background-color: #f39c12; /* Bright orange background */
-  padding: 0.5rem 1rem; /* Padding for all buttons */
-  border-radius: 10px; /* Rounded corners */
-  transition: all 0.3s ease-in-out;
+  border-radius: 3px;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  border: none;
+  background: none; 
   cursor: pointer;
-  display: inline-block;
 }
 
 .toolbar-link:hover {
-  background-color: #e67e22; /* Darker orange on hover */
-  transform: scale(1.05); /* Slightly enlarges the button on hover */
-  text-decoration: none;
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav-right {
+  margin-left: auto;
+}
+
+.logout-button {
+  background-color: transparent;
+  border-radius: 3px;
   color: white;
+  font-size: 18px;
+  border: none;
+  padding: 14px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
-.toolbar-link:active {
-  transform: scale(0.95); /* Press effect */
-}
 
-button.toolbar-link {
-  border: none; /* Remove default button border */
-  outline: none; /* Remove default outline */
+.logout-button:hover {
+  background-color: #f39c12;
 }

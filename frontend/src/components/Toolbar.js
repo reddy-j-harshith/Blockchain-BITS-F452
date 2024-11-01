@@ -9,26 +9,24 @@ function Toolbar() {
 
   const handleLogout = () => {
     logoutUser();
+    navigate('/login'); // Navigate to login after logout
   };
 
   return (
-    <nav className="toolbar">
-      <ul className="toolbar-menu">
-        <li>
-          <Link to={user ? "/home" : "/login"} className="toolbar-link">Home</Link>
-        </li>
-        <li>
-          <Link to="/profile" className="toolbar-link">Profile</Link>
-        </li>
+    <div className="topnav">
+      <Link to={user ? "/home" : "/login"} className="toolbar-link">Home</Link>
+      <Link to="/profile" className="toolbar-link">Profile</Link>
+      <div className="topnav-right">
         {user ? (
-          <li>
-            <button onClick={handleLogout} className="toolbar-link">Logout</button>
-          </li>
+          <button onClick={handleLogout} className="logout-button">Logout</button>
         ) : (
-          <></>
+          <>
+            <Link to="/login" className="toolbar-link">Login</Link>
+            <Link to="/register" className="toolbar-link">Register</Link>
+          </>
         )}
-      </ul>
-    </nav>
+      </div>
+    </div>
   );
 }
 
