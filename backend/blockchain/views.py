@@ -121,6 +121,7 @@ def mine_block(request):
 
     pending_transactions = Transaction.objects.filter(block__isnull=True)
     block.transactions.set(pending_transactions)
+    block.save()
 
     block.current_hash = block.hash_block()
     block.save()

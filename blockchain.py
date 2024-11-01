@@ -129,6 +129,11 @@ class Blockchain:
         """
         Mines a new block by finding a valid proof of work for the last block and creating a new block.
         """
+
+        if not self.current_transactions:
+            print("No transactions to mine.")
+            return None
+
         last_block = self.last_block
         proof = self.proof_of_work(last_block)
         block = self.new_block(proof)
