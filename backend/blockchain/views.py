@@ -171,3 +171,29 @@ def validate_chain(request):
         previous_block = block
 
     return JsonResponse({"is_valid": is_valid})
+
+# Display transactions sent by a user
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def display_sent_transactions(request):
+    transactions = Transaction.objects.filter(sender=request.user.public_key)
+    serializer = TransactionSerializer(transactions, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+# Display transactions received by a user
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def display_received_transactions(request):
+    transactions = Transaction.objects.filter(recipient_public_key=request.user.public_key)
+    serializer = TransactionSerializer(transactions, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+# Display all transactions of a user
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def display_all_transactions(request):
+    sent_transactions = Transaction.objects.filter(sender=request.user.public_key)
+    received_transactions = Transaction.objects.filter(recipient_public_key=request.user.public_key)
+    all_transactions = sent_transactions | received_transactions
+    serializer = TransactionSerializer(all_transactions, many=True)
+    return JsonResponse(serializer.data, safe=False)
