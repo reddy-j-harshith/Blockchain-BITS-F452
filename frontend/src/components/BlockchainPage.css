@@ -1,0 +1,37 @@
+.blockchain-content {
+    padding: 30px;
+  }
+  
+  .blockchain-tiles {
+    display: flex;
+    flex-direction: column; /* Stack tiles vertically */
+    gap: 20px; /* Space between tiles */
+  }
+  
+  .block-tile {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .block-tile:hover {
+    transform: scale(1.02); /* Slight zoom effect on hover */
+  }
+  
+  .block-tile h2 {
+    margin: 0 0 10px 0;
+  }
+  
+  .block-tile p {
+    margin: 5px 0;
+  }
+  
+  .block-tile ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+    margin: 5px 0 0 0; /* Margin for spacing */
+  }
+  

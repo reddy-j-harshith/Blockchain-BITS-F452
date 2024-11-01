@@ -15,5 +15,6 @@ urlpatterns = [
     path('mine/', mine_block, name='mine_block'),
     path('chain/', display_chain, name='display_chain'),
     path('validate/', validate_chain, name='validate_chain'),
-
+    path('latest-block/', display_latest_block, name='display_latest_block'),
+    path('pending-transactions/', display_pending_transactions, name='display_pending_transactions'),
 ]

@@ -105,7 +105,6 @@ def add_transaction(request):
 @permission_classes([IsAuthenticated])
 def mine_block(request):
 
-    # If there are no pending transations
     if not Transaction.objects.filter(block__isnull=True).exists():
         return JsonResponse({"message": "No transactions to mine"}, status=200)
 
@@ -138,6 +137,20 @@ def mine_block(request):
 def display_chain(request):
     chain = Block.objects.all()
     serializer = BlockSerializer(chain, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def display_latest_block(request):
+    block = Block.objects.last()
+    serializer = BlockSerializer(block)
+    return JsonResponse(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def display_pending_transactions(request):
+    transactions = Transaction.objects.filter(block__isnull=True)
+    serializer = TransactionSerializer(transactions, many=True)
     return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])

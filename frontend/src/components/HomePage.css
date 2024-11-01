@@ -2,6 +2,19 @@
   padding: 30px;
 }
 
+.latest-block,
+.pending-transactions {
+  margin-bottom: 30px;
+}
+
+.pending-transactions h2 {
+  color: #333;
+}
+
+.latest-block h2 {
+  color: #333;
+}
+
 .blockchain-tiles {
   display: flex;
   flex-direction: column; /* Stack tiles vertically */
@@ -15,6 +28,7 @@
   background-color: #f9f9f9;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  color: black;
 }
 
 .block-tile:hover {

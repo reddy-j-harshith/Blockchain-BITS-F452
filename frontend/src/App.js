@@ -7,6 +7,7 @@ import ProfilePage from './components/ProfilePage';
 import { AuthProvider } from './components/AuthContext';
 import AuthContext from './components/AuthContext';
 import TransferPage from './components/TransferPage';
+import BlockchainPage from './components/BlockchainPage';
 
 // ProtectedRoute component to restrict access based on role
 const ProtectedRoute = ({ children, role }) => {
@@ -46,6 +47,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chain"
+            element={
+              <ProtectedRoute>
+                <BlockchainPage />
               </ProtectedRoute>
             }
           />
