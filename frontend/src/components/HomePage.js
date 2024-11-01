@@ -51,7 +51,7 @@ function HomePage() {
                 <h2>Block #{block.block_number}</h2>
                 <p><strong>Timestamp:</strong> {new Date(block.timestamp).toLocaleString()}</p>
                 <p><strong>Hash:</strong> {block.current_hash}</p>
-                <p><strong>Previous Hash:</strong> {block.previous_hash}</p>
+                <p><strong>Previous Hash:</strong> {block.previous_hash === '1' ? 'null' : block.previous_hash}</p>
                 <h3>Transactions:</h3>
                 <ul>
                   {block.transactions.map((tx, txIndex) => (
