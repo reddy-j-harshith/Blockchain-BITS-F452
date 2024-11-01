@@ -104,6 +104,11 @@ def add_transaction(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def mine_block(request):
+
+    # If there are no pending transations
+    if not Transaction.objects.filter(block__isnull=True).exists():
+        return JsonResponse({"message": "No transactions to mine"}, status=200)
+
     last_block = Block.objects.last()
     last_proof = last_block.proof if last_block else 0
     index = last_block.index + 1 if last_block else 1
