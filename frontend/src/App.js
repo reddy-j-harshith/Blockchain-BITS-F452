@@ -6,6 +6,7 @@ import HomePage from './components/HomePage';
 import ProfilePage from './components/ProfilePage';
 import { AuthProvider } from './components/AuthContext';
 import AuthContext from './components/AuthContext';
+import TransferPage from './components/TransferPage';
 
 // ProtectedRoute component to restrict access based on role
 const ProtectedRoute = ({ children, role }) => {
@@ -45,6 +46,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/transfer"
+            element={
+              <ProtectedRoute>
+                <TransferPage />
               </ProtectedRoute>
             }
           />

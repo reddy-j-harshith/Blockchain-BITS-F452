@@ -9,7 +9,7 @@ function Toolbar() {
 
   const handleLogout = () => {
     logoutUser();
-    navigate('/login'); // Navigate to login after logout
+    navigate('/login');
   };
 
   return (

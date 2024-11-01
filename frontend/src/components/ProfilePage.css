@@ -3,29 +3,28 @@
   grid-template-rows: auto 1fr;
   width: 100%;
   min-height: 100vh;
-  background-color: #f4f7fa;
+  background-color: #f8f9fa;
 }
 
 .profile-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  width: 100%;
-  max-width: 800px;
+  max-width: 600px;
   margin: auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .profile-header {
   width: 100%;
   text-align: center;
-  padding: 20px 0;
+  padding: 20px;
   margin-bottom: 20px;
+  color: #343a40;
   box-sizing: border-box;
 }
 
 .profile-header h1 {
-  margin: 0;
   font-size: 24px;
   font-weight: 500;
 }
@@ -33,7 +32,7 @@
 .profile-details {
   width: 100%;
   background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px;
   box-sizing: border-box;
@@ -47,17 +46,19 @@
 
 .profile-item label {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: bold; /* Matches the TransferPage label styling */
   margin-bottom: 5px;
-  color: #333;
+  color: #495057;
 }
 
 .profile-text {
   font-size: 16px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
   background-color: #f9f9f9;
+  color: #495057;
+  box-sizing: border-box; /* Ensures consistent sizing */
 }
 
 .profile-key {
