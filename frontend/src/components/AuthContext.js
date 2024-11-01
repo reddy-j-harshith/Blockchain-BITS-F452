@@ -22,6 +22,11 @@ export const AuthProvider = ({ children }) => {
     return token ? jwtDecode(token).public_key : null;
   });
 
+  const [currency, setCurrency] = useState(() => {
+    const token = localStorage.getItem('authTokens');
+    return token ? jwtDecode(token).currency : null;
+  });
+
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -45,6 +50,7 @@ export const AuthProvider = ({ children }) => {
       const decodedToken = jwtDecode(data.access);
       setUser(decodedToken);
       setPublicKey(decodedToken.public_key);
+      setCurrency(decodedToken.currency);
       localStorage.setItem('authTokens', JSON.stringify(data));
       navigate('/home');
       
@@ -57,6 +63,7 @@ export const AuthProvider = ({ children }) => {
     setAuthTokens(null);
     setUser(null);
     setPublicKey(false);
+    setCurrency(0);
     localStorage.removeItem('authTokens');
     navigate('/login');
   };
@@ -76,6 +83,7 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
       setPublicKey(jwtDecode(data.access).public_key);
+      setCurrency(jwtDecode(data.access).currency);
       localStorage.setItem('authTokens', JSON.stringify(data));
     } else {
       logoutUser();
@@ -105,9 +113,10 @@ export const AuthProvider = ({ children }) => {
     authTokens: authTokens,
     user: user,
     publicKey: publicKey,
+    currency: currency,
     loading: loading,
     loginUser: loginUser,
-    logoutUser: logoutUser,
+    logoutUser: logoutUser
   };
 
   return (
