@@ -51,6 +51,7 @@ def initialize_genesis_block(request):
         
         # Now that the genesis block is saved, it has an ID
         # Optionally compute its hash if you need to update it explicitly (depends on how you want to manage it)
+        genesis_block.current_hash = genesis_block.hash_block()
         genesis_block.save()  # This will set the current_hash correctly
 
         return JsonResponse({"message": "Genesis block created successfully."}, status=201)
