@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives import serialization
 
 class CustomUser(AbstractUser):
     public_key = models.TextField(blank=True, null=True)
-    currency = models.DecimalField(default=1000, decimal_places=4, max_digits=10)
+    currency = models.FloatField(default=1000.00)
 
     def generate_keys(self):
 
