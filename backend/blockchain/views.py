@@ -43,7 +43,6 @@ def initialize_genesis_block(request):
     if Block.objects.count() == 0:
         # Create the genesis block without transactions
         genesis_block = Block.objects.create(
-            id=1,  # This is typically set to 1
             index=1,
             proof=1,  # This is typically a predefined proof for the genesis block
             previous_hash='1'  # Typically set to '1' or '0'
