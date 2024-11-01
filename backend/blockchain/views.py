@@ -129,6 +129,8 @@ def mine_block(request):
     # Add pending transactions to the block
     pending_transactions = Transaction.objects.filter(block__isnull=True)
     block.transactions.set(pending_transactions)
+
+    # Now we can calculate the hash because the block has been saved and has an ID
     block.current_hash = block.hash_block()
     block.save()
 

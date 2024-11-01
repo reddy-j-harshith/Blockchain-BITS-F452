@@ -83,13 +83,9 @@ class Block(models.Model):
     transactions = models.ManyToManyField('Transaction', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    def save(self, *args, **kwargs):
-        # Only calculate hash if the block is newly created (i.e., has no ID yet)
-        if self.pk is None:  # Check if the block is new
-            self.current_hash = self.hash_block()  # Calculate hash before saving
-        super().save(*args, **kwargs)  # Call the original save method to create the instance
-
     def hash_block(self):
         # Prepare data for hashing
+        # Now this method won't fail because the block is already saved
         block_string = f'{self.index}{self.proof}{self.previous_hash}{[tx.id for tx in self.transactions.all()]}'
         return hashlib.sha256(block_string.encode()).hexdigest()
+    
