@@ -5,7 +5,6 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, hashes
 from django.contrib.auth import get_user_model
 import hashlib
-import json
 
 class CustomUser(AbstractUser):
     public_key = models.TextField(blank=True, null=True)
