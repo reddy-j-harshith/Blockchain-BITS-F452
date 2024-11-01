@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth import get_user_model
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
@@ -27,3 +28,18 @@ class CustomUser(AbstractUser):
             format=serialization.PrivateFormat.TraditionalOpenSSL,
             encryption_algorithm=serialization.NoEncryption()
         ).decode('utf-8')
+    
+User = get_user_model()
+
+class Block(models.Model):
+    index = models.IntegerField()
+    timestamp = models.FloatField()
+    proof = models.IntegerField()
+    previous_hash = models.TextField()
+    current_hash = models.TextField()
+
+class Transaction(models.Model):
+    sender = models.ForeignKey(User, related_name='sent_transactions', on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, related_name='received_transactions', on_delete=models.CASCADE)
+    amount = models.FloatField()
+    block = models.ForeignKey(Block, related_name='transactions', null=True, blank=True, on_delete=models.SET_NULL)
