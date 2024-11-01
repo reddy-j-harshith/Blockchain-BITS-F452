@@ -124,9 +124,29 @@ def mine_block(request):
     )
 
     pending_transactions = Transaction.objects.filter(block__isnull=True)
-    block.transactions.set(pending_transactions)
-    block.save()
 
+    for transaction in pending_transactions:
+        try:
+            sender_user = CustomUser.objects.get(public_key=transaction.sender)
+            recipient_user = CustomUser.objects.get(public_key=transaction.recipient_public_key)
+
+            # Update balances
+            sender_user.currency -= transaction.amount
+            recipient_user.currency += transaction.amount
+            
+            # Save changes
+            sender_user.save()
+            recipient_user.save()
+
+            # Optionally mark transaction as confirmed
+            transaction.block = block
+            transaction.save()
+
+        except CustomUser.DoesNotExist:
+            # Handle the case where the user does not exist
+            return JsonResponse({"message": "Transaction involves an invalid user."}, status=400)
+
+    block.transactions.set(pending_transactions)
     block.current_hash = block.hash_block()
     block.save()
 
