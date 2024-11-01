@@ -39,19 +39,16 @@ class MyTokenObtainPairView(TokenObtainPairView):
         return response
 
 def initialize_genesis_block(request):
-    # Check if the genesis block already exists
     if Block.objects.count() == 0:
-        # Create the genesis block without transactions
+
         genesis_block = Block.objects.create(
             index=1,
-            proof=1,  # This is typically a predefined proof for the genesis block
-            previous_hash='1'  # Typically set to '1' or '0'
+            proof=1,
+            previous_hash='1'
         )
         
-        # Now that the genesis block is saved, it has an ID
-        # Optionally compute its hash if you need to update it explicitly (depends on how you want to manage it)
         genesis_block.current_hash = genesis_block.hash_block()
-        genesis_block.save()  # This will set the current_hash correctly
+        genesis_block.save()
 
         return JsonResponse({"message": "Genesis block created successfully."}, status=201)
     
@@ -72,15 +69,13 @@ def register_user(request):
 
     user = CustomUser.objects.create_user(username=username, password=password, email=email)
     
-    # Generate keys and store public key
     private_key_pem = user.generate_keys()
     user.save()
 
-    # Return the public key and private key (the user should securely store the private key)
     return JsonResponse({
         "Message": "User created successfully",
         "public_key": user.public_key,
-        "private_key": private_key_pem  # WARNING: This should be handled securely
+        "private_key": private_key_pem
     }, status=201)
 
 @api_view(['POST'])
@@ -89,21 +84,19 @@ def add_transaction(request):
     sender_public_key = request.user.public_key
     recipient_public_key = request.data.get("recipient_public_key")
     amount = request.data.get("amount")
-    private_key_pem = request.data.get("private_key")  # Get the private key from request
+    private_key_pem = request.data.get("private_key")
 
     if not recipient_public_key or not amount or not private_key_pem:
         return JsonResponse({"error": "Recipient public key, amount, and private key are required"}, status=400)
 
-    # Load the private key for signing
     private_key = serialization.load_pem_private_key(
         private_key_pem.encode(),
         password=None,
     )
 
-    # Create transaction
     transaction = Transaction(sender=sender_public_key, recipient_public_key=recipient_public_key, amount=amount)
-    transaction.sign_transaction(private_key)  # Sign the transaction
-    transaction.save()  # Save the transaction
+    transaction.sign_transaction(private_key)
+    transaction.save()
 
     return JsonResponse(TransactionSerializer(transaction).data, status=201)
 
@@ -125,11 +118,9 @@ def mine_block(request):
         previous_hash=previous_hash,
     )
 
-    # Add pending transactions to the block
     pending_transactions = Transaction.objects.filter(block__isnull=True)
     block.transactions.set(pending_transactions)
 
-    # Now we can calculate the hash because the block has been saved and has an ID
     block.current_hash = block.hash_block()
     block.save()
 
@@ -159,4 +150,3 @@ def validate_chain(request):
         previous_block = block
 
     return JsonResponse({"is_valid": is_valid})
-
